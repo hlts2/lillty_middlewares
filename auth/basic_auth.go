@@ -13,7 +13,7 @@ type Config struct {
 	Realm    string
 }
 
-// BasicAuth returns basic auth middleware for lilty framwwork
+// BasicAuth returns basic auth middleware for lilty framewwork
 func BasicAuth(c Config) lilty.ChainHandler {
 	return func(handler lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
