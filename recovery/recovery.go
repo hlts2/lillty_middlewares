@@ -1,6 +1,8 @@
 package recovery
 
 import (
+	"log"
+
 	"github.com/hlts2/lilty"
 )
 
@@ -10,7 +12,7 @@ func Recovery() lilty.ChainHandler {
 		return func(ctxt *lilty.Context) {
 			defer func() {
 				if err := recover(); err != nil {
-					// TODO output log
+					log.Printf("recovered!! error: %v\n", err)
 				}
 			}()
 
