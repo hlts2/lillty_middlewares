@@ -11,7 +11,7 @@ type Config struct {
 
 // Proxy returns proxy middleware for lilty framework
 func Proxy() lilty.ChainHandler {
-	return func(handler lilty.Handler) lilty.Handler {
+	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
 			if ctxt.Scheme() != "https" || ctxt.Scheme() != "http" {
 				// TODO error

@@ -15,7 +15,7 @@ type Config struct {
 
 // BasicAuth returns basic auth middleware for lilty framewwork
 func BasicAuth(c Config) lilty.ChainHandler {
-	return func(handler lilty.Handler) lilty.Handler {
+	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
 			username, password, ok := ctxt.Request.BasicAuth()
 
@@ -27,7 +27,7 @@ func BasicAuth(c Config) lilty.ChainHandler {
 				return
 			}
 
-			handler(ctxt)
+			next(ctxt)
 		}
 	}
 }
