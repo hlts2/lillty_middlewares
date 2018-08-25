@@ -12,7 +12,7 @@ func Recovery() lilty.ChainHandler {
 		return func(ctxt *lilty.Context) {
 			defer func() {
 				if err := recover(); err != nil {
-					log.Printf("recovered!! error: %v\n", err)
+					log.Printf("[PANIC RECOVER] error: %v", err)
 				}
 			}()
 
