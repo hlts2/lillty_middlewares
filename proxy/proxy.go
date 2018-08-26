@@ -27,7 +27,7 @@ func Proxy(c Config) lilty.ChainHandler {
 			ctxt.Request.URL.Scheme = c.Scheme
 			ctxt.Request.URL.Host = c.Host
 
-			resp, err := http.DefaultTransport.RoundTrip(ctxt.Request)
+			resp, err := (&http.Client{}).Do(ctxt.Request)
 			if err != nil {
 				log.Println(err)
 				return
