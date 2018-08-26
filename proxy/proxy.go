@@ -24,6 +24,9 @@ func Proxy(c Config) lilty.ChainHandler {
 				return
 			}
 
+			// https://wiki.suikawiki.org/n/Proxy-Connection%3A$1590
+			ctxt.Request.Header.Del(lilty.ProxyConnection)
+
 			ctxt.Request.URL.Scheme = c.Scheme
 			ctxt.Request.URL.Host = c.Host
 
