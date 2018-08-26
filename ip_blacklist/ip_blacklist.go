@@ -4,10 +4,10 @@ import (
 	"github.com/hlts2/lilty"
 )
 
-// BlacklistAddrs is custom type for blacklist address
+// BlacklistAddrs is custom type for blacklist addresses
 type BlacklistAddrs []string
 
-// Contains returns true if the target address is contained in the `RemoteAddrs`, false otherwise
+// Contains returns true if the remote address is contained in the `BlacklistAddrs`, false otherwise
 func (b BlacklistAddrs) Contains(tgtAddr string) bool {
 	if len(b) == 0 {
 		return true
