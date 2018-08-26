@@ -62,7 +62,3 @@ func New(c Config) lilty.ChainHandler {
 		}
 	}
 }
-
-func preflight(w http.ResponseWriter) {
-
-}
