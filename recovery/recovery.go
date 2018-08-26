@@ -6,8 +6,8 @@ import (
 	"github.com/hlts2/lilty"
 )
 
-// Recovery returns recovery middleware for lilty framework
-func Recovery() lilty.ChainHandler {
+// New returns recovery middleware for lilty framework
+func New() lilty.ChainHandler {
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
 			defer func() {
