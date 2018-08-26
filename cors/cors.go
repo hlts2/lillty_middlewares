@@ -12,7 +12,7 @@ import (
 // Credentials is custom type for Access-Control-Allow-Credentials
 type Credentials bool
 
-// String returns "true" if c is true, otherwise it returns "false"
+// String returns "true" if c(Credentials) is true, otherwise it returns "false"
 func (c Credentials) String() string {
 	switch c {
 	case true:
