@@ -1,8 +1,6 @@
 package auth
 
 import (
-	"fmt"
-
 	"github.com/hlts2/lilty"
 )
 
@@ -22,7 +20,7 @@ func BasicAuth(c Config) lilty.ChainHandler {
 			match := c.Username == username && c.Password == password
 
 			if !ok || !match {
-				ctxt.SetResponseHeader(lilty.WWWAuthenticate, fmt.Sprintf(`Basic realm="%s"`, c.Realm))
+				ctxt.SetResponseHeader(lilty.WWWAuthenticate, `Basic realm="`+c.Realm+`"`)
 				ctxt.SetStatusCode(401)
 				return
 			}
