@@ -3,6 +3,7 @@ package proxy
 import (
 	"bytes"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/hlts2/lilty"
@@ -19,7 +20,7 @@ func Proxy(c Config) lilty.ChainHandler {
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
 			if ctxt.Scheme() != "https" || ctxt.Scheme() != "http" {
-				// TODO error
+				log.Printf("not support scheme: %v\n", ctxt.Scheme())
 				return
 			}
 
@@ -28,7 +29,7 @@ func Proxy(c Config) lilty.ChainHandler {
 
 			resp, err := http.DefaultTransport.RoundTrip(ctxt.Request)
 			if err != nil {
-				// TODO error
+				log.Println(err)
 				return
 			}
 
