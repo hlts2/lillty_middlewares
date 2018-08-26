@@ -1,6 +1,8 @@
 package cors
 
 import (
+	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -33,14 +35,34 @@ type Config struct {
 
 // New returns cors middleware for lilty framework
 func New(c Config) lilty.ChainHandler {
-	_ = strings.Join(c.AllowOrigins, ",")
-	_ = strings.Join(c.AllowMethods, ",")
-	_ = strings.Join(c.AllowHeaders, ",")
-	_ = c.AllowCredentials.String()
+	allowOrigins := strings.Join(c.AllowOrigins, ",")
+	allowMethods := strings.Join(c.AllowMethods, ",")
+	allowHeaders := strings.Join(c.AllowHeaders, ",")
+	allowCredentials := c.AllowCredentials.String()
+	maxAge := fmt.Sprint(c.MaxAge.Seconds())
 
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
-			// TODO 処理を追加
+
+			_, ok := ctxt.GetRequestHeader(lilty.AccessControlRequestMethod)
+
+			// preflight
+			if ok || ctxt.Method() == http.MethodOptions {
+				ctxt.SetResponseHeader(lilty.AccessControlAllowOrigin, allowOrigins)
+				ctxt.SetResponseHeader(lilty.AccessControlAllowMethods, allowMethods)
+				ctxt.SetResponseHeader(lilty.AccessControlAllowHeaders, allowHeaders)
+				ctxt.SetResponseHeader(lilty.AccessControlMaxAge, maxAge)
+				return
+			}
+
+			ctxt.SetResponseHeader(lilty.AccessControlAllowOrigin, allowOrigins)
+			ctxt.SetResponseHeader(lilty.AccessControlAllowCredentials, allowCredentials)
+
+			next(ctxt)
 		}
 	}
+}
+
+func preflight(w http.ResponseWriter) {
+
 }
