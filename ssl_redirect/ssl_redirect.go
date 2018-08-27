@@ -9,8 +9,8 @@ import (
 // Code is custom type for status code
 type Code int
 
-// Check3xxx returns true if code is 3xx, otherwise it returns false
-func (c Code) Check3xxx() bool {
+// Check3xx returns true if code is 3xx, otherwise it returns false
+func (c Code) Check3xx() bool {
 	if c >= 300 && c < 400 {
 		return true
 	}
@@ -40,7 +40,7 @@ func Default() lilty.ChainHandler {
 func New(c Config) lilty.ChainHandler {
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
-			if !c.Code.Check3xxx() {
+			if !c.Code.Check3xx() {
 				// TODO log
 				return
 			}
