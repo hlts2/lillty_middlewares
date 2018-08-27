@@ -31,7 +31,7 @@ type Config struct {
 func New(c Config) lilty.ChainHandler {
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
-			if c.Contains(ctxt.RemoteAddr()) {
+			if c.Contains(ctxt.Request.RemoteAddr) {
 				return
 			}
 

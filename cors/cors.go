@@ -47,7 +47,7 @@ func New(c Config) lilty.ChainHandler {
 			_, ok := ctxt.GetRequestHeader(lilty.AccessControlRequestMethod)
 
 			// preflight
-			if ok || ctxt.Method() == http.MethodOptions {
+			if ok || ctxt.Request.Method == http.MethodOptions {
 				ctxt.SetResponseHeader(lilty.AccessControlAllowOrigin, allowOrigins)
 				ctxt.SetResponseHeader(lilty.AccessControlAllowMethods, allowMethods)
 				ctxt.SetResponseHeader(lilty.AccessControlAllowHeaders, allowHeaders)

@@ -45,7 +45,7 @@ func New(c Config) lilty.ChainHandler {
 				return
 			}
 
-			tgt := "https://" + ctxt.Host() + ctxt.Path()
+			tgt := "https://" + ctxt.Request.Host + ctxt.Path()
 
 			query := ctxt.Request.URL.RawQuery
 			if len(query) > 0 {

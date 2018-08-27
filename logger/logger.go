@@ -17,11 +17,11 @@ func New() lilty.ChainHandler {
 			next(ctxt)
 
 			log.Printf("%s -- [%s] \"%s %s %s\" \"%s\" \"%s\" %s\n",
-				ctxt.RemoteAddr(),
+				ctxt.Request.RemoteAddr,
 				start.Format("2006-01-02 15:04:05 -700 MST"),
-				ctxt.Method(), ctxt.Path(), ctxt.Proto(),
-				ctxt.Host(),
-				ctxt.UserAgent(),
+				ctxt.Request.Method, ctxt.Path(), ctxt.Request.Proto,
+				ctxt.Request.Host,
+				ctxt.Request.UserAgent(),
 				time.Since(start).String())
 		}
 	}
