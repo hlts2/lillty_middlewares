@@ -14,7 +14,7 @@ func TestNew(t *testing.T) {
 	tests := []struct {
 		config   Config
 		request  *http.Request
-		expected http.Header
+		expected *http.Response
 	}{
 		{
 			config: Config{
@@ -27,8 +27,11 @@ func TestNew(t *testing.T) {
 					"Authorization": {""},
 				},
 			},
-			expected: http.Header{
-				"Www-Authenticate": {`Basic realm="Secret area"`},
+			expected: &http.Response{
+				Status: "401 Unauthorized",
+				Header: http.Header{
+					"Www-Authenticate": {`Basic realm="Secret area"`},
+				},
 			},
 		},
 		{
@@ -42,7 +45,10 @@ func TestNew(t *testing.T) {
 					"Authorization": []string{"Basic " + base64.StdEncoding.EncodeToString([]byte("name:pass"))},
 				},
 			},
-			expected: http.Header{},
+			expected: &http.Response{
+				Status: "200 OK",
+				Header: http.Header{},
+			},
 		},
 	}
 
@@ -55,9 +61,15 @@ func TestNew(t *testing.T) {
 			Request: test.request,
 		})
 
-		got := writer.Header()
-		if !reflect.DeepEqual(test.expected, got) {
-			t.Errorf("tests[%d] - New middleware is wrong. expected: %v, got: %v", i, test.expected, got)
+		response := writer.Result()
+
+		if test.expected.Status != response.Status {
+			t.Errorf("tests[%d] - New middleware Status is wrong. expected: %v, got: %v", i, test.expected.Status, response.Status)
+		}
+
+		if !reflect.DeepEqual(test.expected.Header, response.Header) {
+			t.Errorf("tests[%d] - New middleware Header is wrong. expected: %v, got: %v", i, test.expected.Header, response.Header)
 		}
 	}
+
 }
