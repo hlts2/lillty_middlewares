@@ -19,7 +19,7 @@ type Config struct {
 func New(c Config) lilty.ChainHandler {
 	return func(next lilty.Handler) lilty.Handler {
 		return func(ctxt *lilty.Context) {
-			if ctxt.Scheme() != "https" || ctxt.Scheme() != "http" {
+			if ctxt.Scheme() != "https" && ctxt.Scheme() != "http" {
 				log.Printf("not support scheme: %v\n", ctxt.Scheme())
 				return
 			}
@@ -38,14 +38,11 @@ func New(c Config) lilty.ChainHandler {
 
 			defer resp.Body.Close()
 
-			for _, cookie := range resp.Cookies() {
-				http.SetCookie(ctxt.Writer, cookie)
-			}
-
 			copyHeader(ctxt.Writer, resp)
 
 			b := readCloserToBytes(resp.Body)
-			ctxt.Write(resp.StatusCode, b)
+			ctxt.Writer.WriteHeader(resp.StatusCode)
+			ctxt.Writer.Write(b)
 		}
 	}
 }
