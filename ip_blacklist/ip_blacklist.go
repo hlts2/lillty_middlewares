@@ -10,7 +10,7 @@ type BlacklistAddrs []string
 // Contains returns true if the remote address is contained in the `BlacklistAddrs`, false otherwise
 func (b BlacklistAddrs) Contains(tgtAddr string) bool {
 	if len(b) == 0 {
-		return true
+		return false
 	}
 
 	for _, addr := range b {
