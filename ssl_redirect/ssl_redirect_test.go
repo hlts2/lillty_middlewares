@@ -26,7 +26,7 @@ func TestCheck3xxx(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		got := test.code.Check3xxx()
+		got := test.code.Check3xx()
 
 		if test.expected != got {
 			t.Errorf("tests[%d] - Check3xxx is wrong. expected: %v, got: %v", i, test.expected, got)
