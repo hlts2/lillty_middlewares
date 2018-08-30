@@ -2,6 +2,7 @@ package recovery
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/hlts2/lilty"
 )
@@ -13,6 +14,7 @@ func New() lilty.ChainHandler {
 			defer func() {
 				if err := recover(); err != nil {
 					log.Printf("[PANIC RECOVER] error: %v", err)
+					http.Error(ctxt.Writer, http.StatusText(500), 500)
 				}
 			}()
 
