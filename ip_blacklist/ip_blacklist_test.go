@@ -42,33 +42,27 @@ func TestContains(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	tests := []struct {
-		config   Config
-		request  *http.Request
-		data     []byte
-		expected string
+		blacklistAddrs BlacklistAddrs
+		request        *http.Request
+		data           []byte
+		expected       string
 	}{
 		{
-			config: Config{
-				BlacklistAddrs: []string{"192.168.33.10", "192.168.33.11"},
-			},
+			blacklistAddrs: BlacklistAddrs{"192.168.33.10", "192.168.33.11"},
 			request: &http.Request{
 				RemoteAddr: "192.168.33.10",
 			},
 			expected: "",
 		},
 		{
-			config: Config{
-				BlacklistAddrs: []string{"192.168.33.10", "192.168.33.11"},
-			},
+			blacklistAddrs: BlacklistAddrs{"192.168.33.10", "192.168.33.11"},
 			request: &http.Request{
 				RemoteAddr: "192.168.33.11",
 			},
 			expected: "",
 		},
 		{
-			config: Config{
-				BlacklistAddrs: []string{"192.168.33.10", "192.168.33.11"},
-			},
+			blacklistAddrs: BlacklistAddrs{"192.168.33.10", "192.168.33.11"},
 			request: &http.Request{
 				RemoteAddr: "192.168.33.15",
 			},
@@ -76,9 +70,7 @@ func TestNew(t *testing.T) {
 			expected: "192.168.33.15",
 		},
 		{
-			config: Config{
-				BlacklistAddrs: []string{},
-			},
+			blacklistAddrs: BlacklistAddrs{},
 			request: &http.Request{
 				RemoteAddr: "192.168.33.15",
 			},
@@ -86,9 +78,7 @@ func TestNew(t *testing.T) {
 			expected: "192.168.33.15",
 		},
 		{
-			config: Config{
-				BlacklistAddrs: []string{""},
-			},
+			blacklistAddrs: BlacklistAddrs{""},
 			request: &http.Request{
 				RemoteAddr: "192.168.33.15",
 			},
@@ -99,7 +89,7 @@ func TestNew(t *testing.T) {
 
 	for i, test := range tests {
 		writer := httptest.NewRecorder()
-		handler := New(test.config)(func(ctxt *lilty.Context) {
+		handler := New(test.blacklistAddrs)(func(ctxt *lilty.Context) {
 			ctxt.Write(200, test.data)
 		})
 

@@ -12,7 +12,7 @@ import (
 
 func TestNew(t *testing.T) {
 	tests := []struct {
-		handler  lilty.Handler
+		handler  lilty.HandlerFunc
 		expected *http.Response
 	}{
 		{

@@ -38,7 +38,7 @@ func Default() lilty.ChainHandler {
 
 // New returns ssl redirect middleware for lilty framework
 func New(c Config) lilty.ChainHandler {
-	return func(next lilty.Handler) lilty.Handler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
 			if !c.Code.Check3xx() {
 				// TODO log

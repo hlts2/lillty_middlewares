@@ -8,7 +8,7 @@ import (
 // New returns cache middle ware for lilty framework
 func New() lilty.ChainHandler {
 	_ = gocache.New()
-	return func(next lilty.Handler) lilty.Handler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
 			next(ctxt)
 		}

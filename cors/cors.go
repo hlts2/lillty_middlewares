@@ -41,7 +41,7 @@ func New(c Config) lilty.ChainHandler {
 	allowCredentials := c.AllowCredentials.String()
 	maxAge := fmt.Sprint(c.MaxAge.Seconds())
 
-	return func(next lilty.Handler) lilty.Handler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
 
 			_, ok := ctxt.GetRequestHeader(lilty.AccessControlRequestMethod)

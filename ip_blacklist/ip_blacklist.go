@@ -22,16 +22,11 @@ func (b BlacklistAddrs) Contains(tgtAddr string) bool {
 	return false
 }
 
-// Config represents configuration of ip-blacklist middleware
-type Config struct {
-	BlacklistAddrs
-}
-
 // New returns ip-blacklist middlware of lilty framework
-func New(c Config) lilty.ChainHandler {
-	return func(next lilty.Handler) lilty.Handler {
+func New(addr BlacklistAddrs) lilty.ChainHandler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
-			if c.Contains(ctxt.Request.RemoteAddr) {
+			if addr.Contains(ctxt.Request.RemoteAddr) {
 				return
 			}
 

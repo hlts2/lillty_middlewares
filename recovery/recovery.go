@@ -9,7 +9,7 @@ import (
 
 // New returns recovery middleware for lilty framework
 func New() lilty.ChainHandler {
-	return func(next lilty.Handler) lilty.Handler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
 			defer func() {
 				if err := recover(); err != nil {

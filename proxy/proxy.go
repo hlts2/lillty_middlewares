@@ -17,7 +17,7 @@ type Config struct {
 
 // New returns proxy middleware for lilty framework
 func New(c Config) lilty.ChainHandler {
-	return func(next lilty.Handler) lilty.Handler {
+	return func(next lilty.HandlerFunc) lilty.HandlerFunc {
 		return func(ctxt *lilty.Context) {
 			if ctxt.Scheme() != "https" && ctxt.Scheme() != "http" {
 				log.Printf("not support scheme: %v\n", ctxt.Scheme())
